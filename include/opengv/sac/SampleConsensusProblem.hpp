@@ -47,6 +47,7 @@
 #include <functional>
 #include <memory>
 #include <ctime>
+#include <thread>
 
 /**
  * \brief The namespace of this library.
@@ -221,13 +222,13 @@ public:
   std::vector<int> shuffled_indices_;
 
   /** \brief std-based random number generator algorithm. */
-  std::mt19937 rng_alg_;
+  thread_local std::mt19937 rng_alg_;
 
   /** \brief std-based random number generator distribution. */
-  std::shared_ptr< std::uniform_int_distribution<> > rng_dist_;
+  thread_local std::shared_ptr< std::uniform_int_distribution<> > rng_dist_;
 
   /** \brief std-based random number generator. */
-  std::shared_ptr< std::function<int()> > rng_gen_;
+  thread_local std::shared_ptr< std::function<int()> > rng_gen_;
 
 };
 
