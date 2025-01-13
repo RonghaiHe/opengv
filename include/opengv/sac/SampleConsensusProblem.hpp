@@ -222,15 +222,26 @@ public:
   std::vector<int> shuffled_indices_;
 
   /** \brief std-based random number generator algorithm. */
-  thread_local std::mt19937 rng_alg_;
+  static thread_local std::mt19937 rng_alg_;
 
   /** \brief std-based random number generator distribution. */
-  thread_local std::shared_ptr< std::uniform_int_distribution<> > rng_dist_;
+  static thread_local std::shared_ptr< std::uniform_int_distribution<> > rng_dist_;
 
   /** \brief std-based random number generator. */
-  thread_local std::shared_ptr< std::function<int()> > rng_gen_;
+  static thread_local std::shared_ptr< std::function<int()> > rng_gen_;
 
 };
+
+// Add static member definitions outside the class
+template<typename M>
+thread_local std::mt19937 SampleConsensusProblem<M>::rng_alg_;
+
+template<typename M>
+thread_local std::shared_ptr<std::uniform_int_distribution<>> SampleConsensusProblem<M>::rng_dist_;
+
+template<typename M>
+thread_local std::shared_ptr<std::function<int()>> SampleConsensusProblem<M>::rng_gen_;
+
 
 } // namespace sac
 } // namespace opengv
