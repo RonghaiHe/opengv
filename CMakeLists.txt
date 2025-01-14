@@ -308,6 +308,24 @@ IF (BUILD_TESTS)
     WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
     COMMAND test_Sturm)
 
+  set(TEST_SOURCES
+    # ...existing test sources...
+    test_sample_consensus_problem.cpp
+  )
+
+  find_package(GTest REQUIRED)
+  include_directories(${GTEST_INCLUDE_DIRS})
+  # Ensure pthread is linked for multi-threading support
+  find_package(Threads REQUIRED)
+
+  add_executable( test_sample_consensus_problem test/test_sample_consensus_problem.cpp )
+
+  target_link_libraries(test_sample_consensus_problem
+      opengv
+      ${GTEST_BOTH_LIBRARIES}
+      Threads::Threads  # Add threading library
+  )
+
   set_target_properties(
     test_absolute_pose
     test_absolute_pose_sac
@@ -327,6 +345,7 @@ IF (BUILD_TESTS)
     test_point_cloud
     test_point_cloud_sac
     test_Sturm
+    test_sample_consensus_problem
 
     PROPERTIES
     CXX_STANDARD 11
